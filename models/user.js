@@ -1,8 +1,11 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
+var passportLocalMongoose = require('passport-local-mongoose');
 
-module.exports = mongoose.model('User', {
+var User = new Schema({
 	name: String,
 	password: String,
-	role: [{type: String, enum: ['user', 'guide', 'admin']}],
+	role: [{type: String}],
 });
+User.plugin(passportLocalMongoose);
+module.exports = mongoose.model('User', User);

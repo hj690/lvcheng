@@ -10,7 +10,7 @@ var users = require('./routes/users');
 
 // connect to db
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/passport');
+mongoose.connect('mongodb://admin:vfhr2vZbME5J@127.0.0.1:28017/passport');
 
 var app = express();
 
@@ -25,6 +25,15 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+var passport = require('passport');
+app.use(passport.initialize());
+app.use(passport.session());
+var User = require('./models/user');
+var LocalStrategy = require('passport-local').Strategy;
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
 app.use('/', routes);
 app.use('/users', users);
