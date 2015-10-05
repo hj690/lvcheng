@@ -1,9 +1,43 @@
+var passport = require('passport');
+var Account = require('../models/account');
 var express = require('express');
 var router = express.Router();
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+
+/* GET welcome page. */
+router.get('/', function(req, res) {
+  	res.render('index', {user: req.user.email, title: 'Express'});
+});
+
+router.get('/register', function(req, res) {
+  res.render('register', {});
+});
+
+router.post('/register', function(req, res, next) {
+  console.log('registering user');
+  Account.register(new Account({email: req.body.email}), req.body.password, function(err) {
+    if (err) {
+      console.log('error while user register!', err);
+      return next(err);
+    }
+
+    console.log('user registered!');
+
+    res.redirect('/');
+  });
+});
+
+router.get('/login', function(req, res) {
+  res.render('login', {user: req.user});
+});
+
+router.post('/login', passport.authenticate('local'), function(req, res) {
+  res.redirect('/');
+});
+
+router.get('/logout', function(req, res) {
+  req.logout();
+  res.redirect('/');
 });
 
 module.exports = router;

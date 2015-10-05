@@ -2,6 +2,7 @@ var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
+var session = require('cookie-session');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
@@ -24,17 +25,23 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(session({keys: ['email']}));
+
 app.use(express.static(path.join(__dirname, 'public')));
 
+// Configure passport middleware
 var passport = require('passport');
 app.use(passport.initialize());
 app.use(passport.session());
-var User = require('./models/user');
-var LocalStrategy = require('passport-local').Strategy;
-passport.use(new LocalStrategy(User.authenticate()));
-passport.serializeUser(User.serializeUser());
-passport.deserializeUser(User.deserializeUser());
 
+// Configure passport-local to use Account model for authentication
+var Account = require('./models/account');
+var LocalStrategy = require('passport-local').Strategy;
+passport.use(Account.createStrategy());
+passport.serializeUser(Account.serializeUser());
+passport.deserializeUser(Account.deserializeUser());
+
+// Register routes
 app.use('/', routes);
 app.use('/users', users);
 
