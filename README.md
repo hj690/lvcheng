@@ -11,10 +11,11 @@ DEBUG=lvcheng npm start
 1. Install https://www.docker.com/toolbox
 2. Run *Docker Quickstart Terminal*. You will see your *default* IP in terminal.
 3. Build image and run container
-```shell
-docker build -t lvcheng .
-docker run -p 27017:27017 -p 28017:28017 -p 8080:8080 lvcheng
-```
+ ```shell
+ docker build -t lvcheng .
+ docker run -p 27017:27017 -p 28017:28017 -p 8080:8080 lvcheng
+ ```
+
 4. Browse the web from *default* IP with port 8080
 
 ### Random note
