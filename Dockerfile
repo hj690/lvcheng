@@ -20,8 +20,9 @@ ENV PATH $PATH:/nodejs/bin
 WORKDIR /app
 ADD package.json /app/
 RUN npm install
-ADD . /app
+#ADD . /app
 ADD run.sh /
+RUN npm install -g nodemon
 
 EXPOSE 8080
 

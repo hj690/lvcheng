@@ -13,10 +13,15 @@ DEBUG=lvcheng npm start
 3. Build image and run container
  ```shell
  docker build -t lvcheng .
- docker run -p 27017:27017 -p 28017:28017 -p 8080:8080 lvcheng
+ docker run --name dev -v `pwd`:/app:ro -d  -p 27017:27017 -p 28017:28017 -p 8080:8080 lvcheng
  ```
 
 4. Browse the web from *default* IP with port 8080
+5. To stop or start container:
+ ```shell
+ docker stop dev
+ docker start dev 
+ ```
 
 ### Random note
 1. Run mongodb server:
