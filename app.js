@@ -5,6 +5,7 @@ var logger = require('morgan');
 var session = require('cookie-session');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var lessMiddleware = require('less-middleware');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
@@ -26,6 +27,12 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(session({keys: ['email']}));
+
+// config less middleware
+app.use(lessMiddleware('/stylesheets/less', {
+  dest: '/stylesheets/css',
+  pathRoot: path.join(__dirname, 'public')
+}));
 
 app.use(express.static(path.join(__dirname, 'public')));
 
