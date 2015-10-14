@@ -20,6 +20,7 @@
     "passport-local": "1.0.x",
     "passport-local-mongoose": "*",
     "mongoose": "~4.1.9",
-    "bootstrap": "~3.3.5"
+    "bootstrap": "~3.3.5",
+    "jquery": "^2.1.4"
   }
 }
